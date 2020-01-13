@@ -27,14 +27,51 @@ export default class App extends Component {
     );
   }
 
+  async componentDidMount() {
+    await this.retrieveHighscore();
+  }
+
+  storeHighscore = async () => {
+    try {
+      await AsyncStorage.setItem("HIGHSCORE", this.state.highscore.toString());
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  retrieveHighscore = async () => {
+    try {
+      var highscore = await AsyncStorage.getItem("HIGHSCORE");
+      highscore = JSON.parse(highscore);
+      console.log(highscore);
+      if (highscore !== null || highscore !== Nan) {
+        this.setState({
+          highscore: highscore + 1
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  async updateHighscore() {
+    if (this.state.score > this.state.highscore) {
+      this.setState({
+        highscore: this.state.score
+      });
+      await this.storeHighscore();
+    }
+  }
+
   handleClick() {
     this.handleLoading();
-    this.questionMaker(Presidents);
-    this.handleLoading();
+    this.updateHighscore();
     this.setState({
       gameHasStarted: !this.state.gameHasStarted,
-      questionIndex: 1
+      questionIndex: 1,
+      score: 0
     });
+    this.questionMaker(Presidents);
   }
 
   handleLoading() {
@@ -52,6 +89,7 @@ export default class App extends Component {
     this.setState({
       questionIndex: this.state.questionIndex + 1
     });
+    this.updateHighscore();
     this.questionMaker(Presidents);
   }
 

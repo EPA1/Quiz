@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { AsyncStorage, StyleSheet, Text, View, Image } from "react-native";
 import { Header, Button } from "react-native-elements";
-import Constants from "expo-constants";
 import Presidents from "./dataJson/presidentsJson";
+import Quotes from "./dataJson/quotes";
 
 export default class App extends Component {
   constructor(props) {
@@ -38,7 +38,6 @@ export default class App extends Component {
   }
 
   handleLoading() {
-    console.log("agiainananan");
     this.setState({
       loading: !this.state.loading
     });
@@ -179,6 +178,8 @@ export default class App extends Component {
 
   render() {
     if (!this.state.gameHasStarted) {
+      var quoteRand = Math.floor(Math.random() * Quotes.length);
+
       return (
         <View style={styles.menu}>
           <Header
@@ -195,6 +196,13 @@ export default class App extends Component {
             HighScore: {this.state.highscore}
           </Text>
           <View style={styles.menuContainer}>
+            <Image
+              style={styles.menuImage}
+              source={{
+                uri:
+                  "https://upload.wikimedia.org/wikipedia/commons/d/d4/George-W-Bush.jpeg"
+              }}
+            ></Image>
             <Text style={styles.welcome}>
               To get started, press the Play button
             </Text>
@@ -204,6 +212,12 @@ export default class App extends Component {
               title="Play"
               loading={this.state.loading}
             ></Button>
+            <Text style={styles.quoteText}>
+              "{Quotes[quoteRand].quoteText}"
+            </Text>
+            <Text style={styles.quoteAuthor}>
+              - {Quotes[quoteRand].quoteAuthor}
+            </Text>
           </View>
         </View>
       );
@@ -263,18 +277,29 @@ const styles = StyleSheet.create({
   menu: {
     flex: 1
   },
+  menuImage: {
+    marginTop: 50,
+    height: 250,
+    width: 200
+  },
   menuContainer: {
     flex: 2,
     alignItems: "center"
   },
   welcome: {
     fontSize: 20,
-    marginTop: 150
+    marginTop: 50
   },
   playBtn: {
     margin: 30,
-    width: 100
+    width: 150
   },
+  quoteText: {
+    margin: 20,
+    fontStyle: "italic",
+    textAlign: "center"
+  },
+  quoteAuthor: {},
   highscore: {
     paddingLeft: 10,
     paddingTop: 10,
@@ -307,7 +332,6 @@ const styles = StyleSheet.create({
     width: 200
   },
   backBtn: {
-    margin: 20,
-    backgroundColor: "blue"
+    margin: 20
   }
 });

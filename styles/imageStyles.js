@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   menuImage: {
-    marginTop: 50,
+    marginTop: 20,
     height: 250,
     width: 200
   },

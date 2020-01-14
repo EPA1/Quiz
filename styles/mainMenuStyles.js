@@ -9,6 +9,9 @@ export default StyleSheet.create({
     paddingTop: 10,
     fontSize: 20
   },
+  presidentName: {
+    fontWeight: "bold"
+  },
   menuContainer: {
     flex: 2,
     alignItems: "center",

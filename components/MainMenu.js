@@ -4,6 +4,7 @@ import { Header, Button } from "react-native-elements";
 import Quotes from "../data/quotes";
 import { getImage } from "../functions/getImage";
 import styles from "../styles/mainMenuStyles";
+import Presidents from "../data/presidentsJson";
 
 export default class MainMenu extends Component {
   render() {
@@ -25,6 +26,9 @@ export default class MainMenu extends Component {
         <Text style={styles.highscore}>HighScore: {this.props.highscore}</Text>
         <View style={styles.menuContainer}>
           <View>{getImage(imageRand, this.props.imageQuestion)}</View>
+          <Text style={styles.presidentName}>
+            {Presidents[imageRand].president}
+          </Text>
           <Text style={styles.welcome}>
             To get started, press the Play button
           </Text>

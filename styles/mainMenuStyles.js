@@ -12,7 +12,7 @@ export default StyleSheet.create({
   menuContainer: {
     flex: 2,
     alignItems: "center",
-    marginTop: 70
+    marginTop: 25
   },
   welcome: {
     fontSize: 20,

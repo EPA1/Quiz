@@ -5,6 +5,7 @@ import Presidents from "./data/presidentsJson";
 import Quotes from "./data/quotes";
 import { getImage } from "./functions/getImage";
 import MainMenu from "./components/MainMenu";
+import InGame from "./components/InGame";
 
 export default class App extends Component {
   constructor(props) {
@@ -285,90 +286,17 @@ export default class App extends Component {
     // If the game has started, render the question and answers
     else {
       return (
-        <View style={styles.game}>
-          <Header
-            centerComponent={{
-              text: "US Presidents Quiz",
-              style: {
-                color: "#fff",
-                fontSize: 20
-              }
-            }}
-          ></Header>
-          <Text style={styles.score}>
-            Score: {this.state.score}/{this.state.questionIndex - 1}
-          </Text>
-          <View style={styles.gameContainer}>
-            <Text style={styles.questionIndex}>
-              Question {this.state.questionIndex}
-            </Text>
-            <Text style={styles.questionText}>{this.state.question}</Text>
-            {this.state.imageQuestion ? (
-              <View>
-                {getImage(this.state.correctAnswer, this.state.imageQuestion)}
-              </View>
-            ) : null}
-            <Button
-              style={styles.answersBtn}
-              title={this.state.answerIndex[0]}
-              onPress={() => this.handleAnswer(this.state.answerIndex[0])}
-            ></Button>
-            <Button
-              style={styles.answersBtn}
-              title={this.state.answerIndex[1]}
-              onPress={() => this.handleAnswer(this.state.answerIndex[1])}
-            ></Button>
-            <Button
-              style={styles.answersBtn}
-              title={this.state.answerIndex[2]}
-              onPress={() => this.handleAnswer(this.state.answerIndex[2])}
-            ></Button>
-            <Button
-              style={styles.answersBtn}
-              title={this.state.answerIndex[3]}
-              onPress={() => this.handleAnswer(this.state.answerIndex[3])}
-            ></Button>
-            <Button
-              style={styles.backBtn}
-              title="Back"
-              onPress={this.handleBack}
-            ></Button>
-          </View>
-        </View>
+        <InGame
+          score={this.state.score}
+          questionIndex={this.state.questionIndex}
+          question={this.state.question}
+          imageQuestion={this.state.imageQuestion}
+          correctAnswer={this.state.correctAnswer}
+          answerIndex={this.state.answerIndex}
+          handleAnswer={this.handleAnswer}
+          handleBack={this.handleBack}
+        />
       );
     }
   }
 }
-
-// Stylesheet (Should be moved to seperate file)
-const styles = StyleSheet.create({
-  score: {
-    paddingLeft: 10,
-    paddingTop: 10,
-    fontSize: 20
-  },
-  game: {
-    flex: 1
-  },
-  gameContainer: {
-    flex: 2,
-    alignItems: "center"
-  },
-  questionIndex: {
-    fontSize: 30,
-    fontWeight: "bold",
-    marginTop: 30
-  },
-  questionText: {
-    fontSize: 20,
-    margin: 30,
-    textAlign: "center"
-  },
-  answersBtn: {
-    margin: 20,
-    width: 200
-  },
-  backBtn: {
-    margin: 20
-  }
-});

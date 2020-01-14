@@ -36,7 +36,7 @@ export default class App extends Component {
   }
 
   // Gets an image based on the index parameter
-  getImage(index) {
+  async getImage(index) {
     switch (index) {
       case 1:
         return (
@@ -880,6 +880,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     margin: 30,
     textAlign: "center"
+  },
+  imageQuestion: {
+    marginTop: 50,
+    height: 250,
+    width: 200
   },
   answersBtn: {
     margin: 20,

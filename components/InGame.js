@@ -4,8 +4,11 @@ import { Header, Button } from "react-native-elements";
 import { getImage } from "../functions/getImage";
 import styles from "../styles/inGameStyles";
 
+var image;
+
 export default class InGame extends Component {
   render() {
+    console.log(this.props.isImageQuestion + " is this imagequestion");
     return (
       <View style={styles.game}>
         <Header
@@ -25,10 +28,8 @@ export default class InGame extends Component {
             Question {this.props.questionIndex}
           </Text>
           <Text style={styles.questionText}>{this.props.question}</Text>
-          {this.props.imageQuestion ? (
-            <View>
-              {getImage(this.props.correctAnswer, this.props.imageQuestion)}
-            </View>
+          {this.props.isImageQuestion ? (
+            <View>{getImage(this.props.image, true)}</View>
           ) : null}
           <Button
             style={styles.answersBtn}

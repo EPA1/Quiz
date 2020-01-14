@@ -4,7 +4,6 @@ import styles from "../styles/imageStyles";
 
 // Gets an image based on the index parameter
 export function getImage(index, imageQuestion) {
-  console.log(imageQuestion);
   switch (index) {
     case 1:
       return (

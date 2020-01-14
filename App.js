@@ -19,7 +19,8 @@ export default class App extends Component {
       question: "",
       answerIndex: [],
       correctAnswer: "",
-      isImageQuestion: false
+      isImageQuestion: false,
+      image: null
     };
 
     // Binds all the methods
@@ -251,7 +252,8 @@ export default class App extends Component {
         // Sets the current question
         this.setState({
           question: "Which president is this?",
-          isImageQuestion: true
+          isImageQuestion: true,
+          image: Presidents[president].number
         });
 
         break;
@@ -293,6 +295,7 @@ export default class App extends Component {
           isImageQuestion={this.state.isImageQuestion}
           correctAnswer={this.state.correctAnswer}
           answerIndex={this.state.answerIndex}
+          image={this.state.image}
           handleAnswer={this.handleAnswer}
           handleBack={this.handleBack}
         />

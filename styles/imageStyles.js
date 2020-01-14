@@ -7,8 +7,8 @@ export default StyleSheet.create({
     width: 200
   },
   imageQuestion: {
-    marginTop: 50,
-    height: 250,
-    width: 200
+    marginTop: 10,
+    height: 130,
+    width: 100
   }
 });

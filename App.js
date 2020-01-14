@@ -4,6 +4,7 @@ import { Header, Button } from "react-native-elements";
 import Presidents from "./data/presidentsJson";
 import Quotes from "./data/quotes";
 import { getImage } from "./functions/getImage";
+import MainMenu from "./components/MainMenu";
 
 export default class App extends Component {
   constructor(props) {
@@ -21,8 +22,8 @@ export default class App extends Component {
     };
 
     // Binds all the methods
-    this.HandlePlay = this.HandlePlay.bind(this);
-    this.HandleBack = this.HandleBack.bind(this);
+    this.handlePlay = this.handlePlay.bind(this);
+    this.handleBack = this.handleBack.bind(this);
     this.handleAnswer = this.handleAnswer.bind(this);
     this.questionMaker = this.questionMaker.bind(this);
     this.setCorrectAnswer = this.setCorrectAnswer.bind(this);
@@ -71,7 +72,7 @@ export default class App extends Component {
   }
 
   // Called when the play button is pressed
-  HandlePlay() {
+  handlePlay() {
     // Makes sure the game has started and resets question index and score
     this.setState({
       gameHasStarted: !this.state.gameHasStarted,
@@ -83,7 +84,7 @@ export default class App extends Component {
   }
 
   // Called when the back button is pressed
-  HandleBack() {
+  handleBack() {
     this.updateHighscore(); // Check if highscore needs updating
     this.setState({
       imageQuestion: false,
@@ -273,43 +274,12 @@ export default class App extends Component {
   render() {
     // If the game has not started the main menu is rendered
     if (!this.state.gameHasStarted) {
-      var quoteRand = Math.floor(Math.random() * Quotes.length); // Returns a random quote with author
-      var imageRand = Math.floor(Math.random() * 45 + 1);
-
       return (
-        <View style={styles.menu}>
-          <Header
-            centerComponent={{
-              text: "US Presidents Quiz",
-              style: {
-                flex: 1,
-                color: "#fff",
-                fontSize: 20
-              }
-            }}
-          ></Header>
-          <Text style={styles.highscore}>
-            HighScore: {this.state.highscore}
-          </Text>
-          <View style={styles.menuContainer}>
-            <View>{getImage(imageRand, this.state.imageQuestion)}</View>
-            <Text style={styles.welcome}>
-              To get started, press the Play button
-            </Text>
-            <Button
-              buttonStyle={styles.playBtn}
-              onPress={this.HandlePlay}
-              title="Play"
-              loading={this.state.loading}
-            ></Button>
-            <Text style={styles.quoteText}>
-              "{Quotes[quoteRand].quoteText}"
-            </Text>
-            <Text style={styles.quoteAuthor}>
-              - {Quotes[quoteRand].quoteAuthor}
-            </Text>
-          </View>
-        </View>
+        <MainMenu
+          highscore={this.state.highscore}
+          imageQuestion={this.state.imageQuestion}
+          handlePlay={this.handlePlay}
+        />
       );
     }
     // If the game has started, render the question and answers
@@ -361,7 +331,7 @@ export default class App extends Component {
             <Button
               style={styles.backBtn}
               title="Back"
-              onPress={this.HandleBack}
+              onPress={this.handleBack}
             ></Button>
           </View>
         </View>

@@ -12,21 +12,21 @@ export default class App extends Component {
     super(props);
     // STATES
     this.state = {
-      gameHasStarted: false,
+      hasGameStarted: false,
       highscore: 0,
       score: 0,
       questionIndex: 1,
       question: "",
       answerIndex: [],
       correctAnswer: "",
-      imageQuestion: false
+      isImageQuestion: false
     };
 
     // Binds all the methods
     this.handlePlay = this.handlePlay.bind(this);
     this.handleBack = this.handleBack.bind(this);
     this.handleAnswer = this.handleAnswer.bind(this);
-    this.questionMaker = this.questionMaker.bind(this);
+    this.createQuestion = this.createQuestion.bind(this);
     this.setCorrectAnswer = this.setCorrectAnswer.bind(this);
     this.getRandomWithManyExclusions = this.getRandomWithManyExclusions.bind(
       this
@@ -76,20 +76,20 @@ export default class App extends Component {
   handlePlay() {
     // Makes sure the game has started and resets question index and score
     this.setState({
-      gameHasStarted: !this.state.gameHasStarted,
+      hasGameStarted: !this.state.hasGameStarted,
       questionIndex: 1,
       score: 0
     });
     // Questions are made
-    this.questionMaker(Presidents);
+    this.createQuestion();
   }
 
   // Called when the back button is pressed
   handleBack() {
     this.updateHighscore(); // Check if highscore needs updating
     this.setState({
-      imageQuestion: false,
-      gameHasStarted: !this.state.gameHasStarted
+      isImageQuestion: false,
+      hasGameStarted: !this.state.hasGameStarted
     });
   }
 
@@ -104,11 +104,11 @@ export default class App extends Component {
     // Question number is updated and resets imagequestion
     this.setState({
       questionIndex: this.state.questionIndex + 1,
-      imageQuestion: false
+      isImageQuestion: false
     });
     this.updateHighscore();
     // Called to create a new question
-    this.questionMaker(Presidents);
+    this.createQuestion();
   }
 
   // Sets the correct answer state
@@ -119,9 +119,9 @@ export default class App extends Component {
   }
 
   //Creates the questions for the quiz. As of now there is only 2 different quiz questions, chosen at random.
-  questionMaker(presidents) {
+  createQuestion() {
     var rand = Math.floor(Math.random() * 3 + 1); // Randomizes question 1 or 2
-    var president = Math.floor(Math.random() * presidents.length); // Randomizes selected president for the correct answer
+    var president = Math.floor(Math.random() * Presidents.length); // Randomizes selected president for the correct answer
     var excludeListAnswersIndex = []; // Exclude list for use in getRandomWithManyExclusives(). This is used for randomizing where the correct answer is
     var excludeListAnswers = []; // Same as above only for randomizing the incorrect answer
 
@@ -130,15 +130,15 @@ export default class App extends Component {
         //Answer 1 (CORRECT)
         this.state.answerIndex[
           this.getRandomWithManyExclusions(excludeListAnswersIndex)
-        ] = presidents[president].president;
+        ] = Presidents[president].president;
 
-        this.setCorrectAnswer(presidents[president].president);
+        this.setCorrectAnswer(Presidents[president].president);
 
         //Answer 2
         this.state.answerIndex[
           this.getRandomWithManyExclusions(excludeListAnswersIndex)
         ] =
-          presidents[
+          Presidents[
             this.getRandomWithManyExclusions(excludeListAnswers)
           ].president;
 
@@ -146,7 +146,7 @@ export default class App extends Component {
         this.state.answerIndex[
           this.getRandomWithManyExclusions(excludeListAnswersIndex)
         ] =
-          presidents[
+          Presidents[
             this.getRandomWithManyExclusions(excludeListAnswers)
           ].president;
 
@@ -154,7 +154,7 @@ export default class App extends Component {
         this.state.answerIndex[
           this.getRandomWithManyExclusions(excludeListAnswersIndex)
         ] =
-          presidents[
+          Presidents[
             this.getRandomWithManyExclusions(excludeListAnswers)
           ].president;
 
@@ -162,9 +162,9 @@ export default class App extends Component {
         this.setState({
           question:
             "Who was president from \n" +
-            presidents[president].took_office +
+            Presidents[president].took_office +
             " - " +
-            presidents[president].left_office +
+            Presidents[president].left_office +
             "?"
         });
         break;
@@ -173,14 +173,14 @@ export default class App extends Component {
         this.state.answerIndex[
           this.getRandomWithManyExclusions(excludeListAnswersIndex)
         ] =
-          presidents[president].took_office +
+          Presidents[president].took_office +
           " - " +
-          presidents[president].left_office;
+          Presidents[president].left_office;
 
         this.setCorrectAnswer(
-          presidents[president].took_office +
+          Presidents[president].took_office +
             " - " +
-            presidents[president].left_office
+            Presidents[president].left_office
         );
 
         //Answer 2
@@ -188,47 +188,47 @@ export default class App extends Component {
         this.state.answerIndex[
           this.getRandomWithManyExclusions(excludeListAnswersIndex)
         ] =
-          presidents[RandPres1].took_office +
+          Presidents[RandPres1].took_office +
           " - " +
-          presidents[RandPres1].left_office;
+          Presidents[RandPres1].left_office;
 
         //Answer 3
         var RandPres2 = this.getRandomWithManyExclusions(excludeListAnswers);
         this.state.answerIndex[
           this.getRandomWithManyExclusions(excludeListAnswersIndex)
         ] =
-          presidents[RandPres2].took_office +
+          Presidents[RandPres2].took_office +
           " - " +
-          presidents[RandPres2].left_office;
+          Presidents[RandPres2].left_office;
 
         //Answer 4
         var RandPres3 = this.getRandomWithManyExclusions(excludeListAnswers);
         this.state.answerIndex[
           this.getRandomWithManyExclusions(excludeListAnswersIndex)
         ] =
-          presidents[RandPres3].took_office +
+          Presidents[RandPres3].took_office +
           " - " +
-          presidents[RandPres3].left_office;
+          Presidents[RandPres3].left_office;
 
         // Sets the current question
         this.setState({
           question:
-            "When did " + presidents[president].president + " sit in office?"
+            "When did " + Presidents[president].president + " sit in office?"
         });
         break;
       case 3:
         //Answer 1 (CORRECT)
         this.state.answerIndex[
           this.getRandomWithManyExclusions(excludeListAnswersIndex)
-        ] = presidents[president].president;
+        ] = Presidents[president].president;
 
-        this.setCorrectAnswer(presidents[president].president);
+        this.setCorrectAnswer(Presidents[president].president);
 
         //Answer 2
         this.state.answerIndex[
           this.getRandomWithManyExclusions(excludeListAnswersIndex)
         ] =
-          presidents[
+          Presidents[
             this.getRandomWithManyExclusions(excludeListAnswers)
           ].president;
 
@@ -236,7 +236,7 @@ export default class App extends Component {
         this.state.answerIndex[
           this.getRandomWithManyExclusions(excludeListAnswersIndex)
         ] =
-          presidents[
+          Presidents[
             this.getRandomWithManyExclusions(excludeListAnswers)
           ].president;
 
@@ -244,14 +244,14 @@ export default class App extends Component {
         this.state.answerIndex[
           this.getRandomWithManyExclusions(excludeListAnswersIndex)
         ] =
-          presidents[
+          Presidents[
             this.getRandomWithManyExclusions(excludeListAnswers)
           ].president;
 
         // Sets the current question
         this.setState({
           question: "Which president is this?",
-          imageQuestion: true
+          isImageQuestion: true
         });
 
         break;
@@ -274,11 +274,11 @@ export default class App extends Component {
   // RENDER
   render() {
     // If the game has not started the main menu is rendered
-    if (!this.state.gameHasStarted) {
+    if (!this.state.hasGameStarted) {
       return (
         <MainMenu
           highscore={this.state.highscore}
-          imageQuestion={this.state.imageQuestion}
+          isImageQuestion={this.state.isImageQuestion}
           handlePlay={this.handlePlay}
         />
       );
@@ -290,7 +290,7 @@ export default class App extends Component {
           score={this.state.score}
           questionIndex={this.state.questionIndex}
           question={this.state.question}
-          imageQuestion={this.state.imageQuestion}
+          isImageQuestion={this.state.isImageQuestion}
           correctAnswer={this.state.correctAnswer}
           answerIndex={this.state.answerIndex}
           handleAnswer={this.handleAnswer}
